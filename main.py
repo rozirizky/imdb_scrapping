@@ -18,7 +18,7 @@ def parse_html(url):
     return parse
 
 def get_link():
-    parse = parse_html('https://www.imdb.com/chart/top/?ref_=nv_mv_250')
+    parse = parse_html('https://m.imdb.com/chart/top/')
     movie = parse.find_all('li','ipc-metadata-list-summary-item sc-10233bc-0 iherUv cli-parent')
     links = []
     for m in movie[0:100]:
@@ -37,9 +37,9 @@ def get_data(link):
     parse = parse_html(link)
     Title = parse.find('span','hero__primary-text').text
     Rating= parse.find('span','sc-bde20123-1').text
-    Year=parse.find('div','cFndlt').find_next('a','ipc-link ipc-link--baseAlt ipc-link--inherit-color').text
+    Year=parse.find('div','dUpRPQ').find_next('a','ipc-link ipc-link--baseAlt ipc-link--inherit-color').text
 
-    Synopsis = parse.find('span','sc-466bb6c-0 hlbAws').text
+    Synopsis = parse.find('span',attrs={"data-testid": 'plot-xs_to_m'}).text
     Runtime=parse.find('li',attrs={"data-testid": 'title-techspec_runtime'}).find('div','ipc-metadata-list-item__content-container').text
     if parse.find('span',string="Director") :
         Director=parse.find('span',string="Director").parent.find_all('a','ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link')
